@@ -1,0 +1,161 @@
+/* Main Panel */
+#neuronudge-panel {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  background: #ffffff;
+  border: 2px solid #2563eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  z-index: 999999;
+  overflow: hidden;
+}
+
+/* Header */
+.nn-header {
+  background: #2563eb;
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+  user-select: none;
+}
+
+.nn-title {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.nn-icon {
+  font-size: 18px;
+}
+
+.nn-minimize {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.nn-minimize:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Content Area */
+.nn-content {
+  padding: 16px;
+  background: #f8fafc;
+}
+
+/* Stat Cards */
+.nn-stat-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nn-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.nn-stat-label {
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.nn-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Status Section */
+.nn-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+.nn-status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.status-excellent {
+  background: #10b981;
+}
+
+.status-good {
+  background: #3b82f6;
+}
+
+.status-moderate {
+  background: #f59e0b;
+}
+
+.status-low {
+  background: #ef4444;
+}
+
+#status-text {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #neuronudge-panel {
+    width: 280px;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .nn-stat-value {
+    font-size: 20px;
+  }
+}
+
+/* Ensure panel stays on top of everything */
+#neuronudge-panel * {
+  box-sizing: border-box;
+}

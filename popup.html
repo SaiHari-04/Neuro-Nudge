@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuroNudge Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 350px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      padding: 0;
+    }
+
+    .popup-header {
+      background: #2563eb;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .popup-header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .popup-header p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .popup-content {
+      padding: 20px;
+    }
+
+    .info-section {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .info-section h3 {
+      font-size: 14px;
+      color: #1e293b;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-section p {
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .stats-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .stat-box {
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-box-label {
+      font-size: 10px;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .stat-box-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .video-container {
+      position: relative;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    video {
+      border-radius: 8px;
+      border: 1px solid #2563eb;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 8px;
+    }
+
+    #status {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .stress-low {
+      color: green;
+    }
+
+    .stress-medium {
+      color: orange;
+    }
+
+    .stress-high {
+      color: red;
+    }
+
+    #emotions {
+      margin-top: 12px;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    #emotion-bars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .emotion-bar-label {
+      font-weight: 600;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .emotion-bar {
+      background: #e0e7ff;
+      border-radius: 4px;
+      height: 8px;
+      width: 100%;
+    }
+
+    .emotion-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .emotion-bar-value {
+      font-size: 10px;
+      text-align: right;
+      margin-top: 2px;
+      color: #475569;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #2563eb;
+      border: 1px solid #2563eb;
+    }
+
+    .btn-secondary:hover {
+      background: #eff6ff;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 12px;
+      font-size: 10px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    /* Emotion bar colors */
+    #bar-neutral { background: #2563eb; }
+    #bar-happy { background: #0ea5e9; }
+    #bar-sad { background: #0c4a6e; }
+    #bar-angry { background: #dc2626; }
+    #bar-fearful { background: #6b7280; }
+    #bar-disgusted { background: #ca8a04; }
+    #bar-surprised { background: #b45309; }
+  </style>
+</head>
+<body>
+  <div class="popup-header">
+    <h1>⌨️ NeuroNudge</h1>
+    <p>Keystroke Dynamics Monitor</p>
+  </div>
+
+  <div class="popup-content">
+    <div class="info-section">
+      <h3>📊 Current Session</h3>
+      <p>Monitoring your typing patterns in real-time across all websites.</p>
+      <div class="stats-summary">
+        <div class="stat-box">
+          <div class="stat-box-label">Total Keys</div>
+          <div class="stat-box-value" id="popup-total-keys">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-label">WPM</div>
+          <div class="stat-box-value" id="popup-wpm">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section video-container" id="videoContainer" style="display:none;">
+      <h3>😊 Face Stress Level</h3>
+      <video id="video" width="320" height="240" autoplay muted></video>
+      <canvas id="overlay" width="320" height="240"></canvas>
+      <div id="status">Loading models...</div>
+
+      <div id="emotions">
+        <h4>Expressions</h4>
+        <div id="emotion-bars">
+          <div>
+            <div class="emotion-bar-label">Neutral</div>
+            <div class="emotion-bar"><div id="bar-neutral" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-neutral" class="emotion-bar-value">0%</div>
+          </div>
+          <div>
+            <div class="emotion-bar-label">Happy</div>
+            <div class="emotion-bar"><div id="bar-happy" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-happy" class="emotion-bar-value">0%</div>
+          </div>
+          <div>
+            <div class="emotion-bar-label">Sad</div>
+            <div class="emotion-bar"><div id="bar-sad" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-sad" class="emotion-bar-value">0%</div>
+          </div>
+          <div>
+            <div class="emotion-bar-label">Angry</div>
+            <div class="emotion-bar"><div id="bar-angry" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-angry" class="emotion-bar-value">0%</div>
+          </div>
+          <div>
+            <div class="emotion-bar-label">Fearful</div>
+            <div class="emotion-bar"><div id="bar-fearful" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-fearful" class="emotion-bar-value">0%</div>
+          </div>
+          <div>
+            <div class="emotion-bar-label">Disgusted</div>
+            <div class="emotion-bar"><div id="bar-disgusted" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-disgusted" class="emotion-bar-value">0%</div>
+          </div>
+          <div>
+            <div class="emotion-bar-label">Surprised</div>
+            <div class="emotion-bar"><div id="bar-surprised" class="emotion-bar-fill" style="width:0%"></div></div>
+            <div id="pct-surprised" class="emotion-bar-value">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <h3>ℹ️ About</h3>
+      <p>
+        This extension monitors your keystroke dynamics including dwell time, flight time,
+        typing speed, and error patterns to support digital wellness.
+      </p>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn btn-secondary" id="reset-btn">Reset Data</button>
+      <button class="btn btn-primary" id="refresh-btn">Refresh Stats</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    NeuroNudge v1.0 | Digital Wellness Research
+  </div>
+
+
+  <script src="face-api.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

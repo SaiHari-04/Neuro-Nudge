@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "NeuroNudge - Keystroke & Face Stats",
+  "version": "1.1",
+  "description": "Monitor keystroke dynamics and facial stress across all sites.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "sidePanel",
+    "notifications",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "face-api.min.js",
+        "sidepanel.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
